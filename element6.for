@@ -376,6 +376,7 @@ c If output is required at this epoch, write elements to appropriate files
             tprevious = time
 c
 c Write required elements to the appropriate aei file
+C Element write out
             do j = 1, nbod
               k = code(j)
               if (unit(k).ge.10) then
@@ -383,7 +384,9 @@ c Write required elements to the appropriate aei file
                   write (unit(k),fout) year,month,t1,(el(iel(l),k),l=1,
      %              nel)
                 else
-                  write (unit(k),fout) t1,(el(iel(l),k),l=1,nel)
+C                  write (unit(k),fout) t1,(el(iel(l),k),l=1,nel)
+                  write (*,'(A8,$)') id(k) 
+                  write (*,fout) t1,(el(iel(l),k),l=1,nel)
                 end if
               end if
             end do
@@ -910,6 +913,8 @@ c
       return
       end
 c
+
+C I am canceling this subroutine out and simply making it return nothing
 c%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 c
 c      MIO_AEI.FOR    (ErikSoft   31 January 2001)
@@ -968,8 +973,8 @@ c If the file exists already, give a warning and don't overwrite it
      %    filename(1:80)
         unitnum = -1
       else
-        open (unitnum, file=filename, status='new')
-        write (unitnum, '(/,30x,a8,//,a)') id,header(1:lenhead)
+C        open (unitnum, file=filename, status='new')
+C        write (unitnum, '(/,30x,a8,//,a)') id,header(1:lenhead)
       end if
 c
 c------------------------------------------------------------------------------
