@@ -1,1 +1,8 @@
 *.db
+*.out
+*.in
+*.txt
+*.inc
+element6
+mercury6
+nakefile
