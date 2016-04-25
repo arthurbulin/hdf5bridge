@@ -5,6 +5,6 @@
 *.inc
 element6
 mercury6
-nakefile
-#*#
+#makefile
+\#*\#
 .vscode
