@@ -4,5 +4,5 @@ all: element6
 
 
 element6:
-	g77 -o element6 element6.for
+	gfortran -w -o element.x element6.for
 
