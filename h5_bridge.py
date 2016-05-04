@@ -52,3 +52,9 @@ def refine_raw(dat):
 	bodies = get_bodies(body_set)
 	index = get_indexs(body_set, bodies)
 	return header,bodies,index,x
+
+def assemble_set(header,bodies,index,dat):
+	for i in xrange(header):
+		for j in xrange(len(body)):
+			for k in xrange(len(index[body[j]]):
+				
