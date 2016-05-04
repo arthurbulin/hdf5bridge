@@ -23,6 +23,7 @@ c
       integer year,month,timestyle,line_num,lenhead,lmem(NMESS)
       integer nchar,algor,centre,allflag,firstflag,ninfile,nel,iel(22)
       integer nbod1,nbig1,unit(NMAX),code(NMAX),master_unit(NMAX)
+      integer pcount
       real*8 time,teval,t0,t1,tprevious,rmax,rcen,rfac,rhocgs,temp
       real*8 mcen,jcen(3),el(22,NMAX),s(3),is(NMAX),ns(NMAX),a(NMAX)
       real*8 mio_c2re, mio_c2fl,fr,theta,phi,fv,vtheta,vphi,gm
@@ -40,6 +41,7 @@ c
       allflag = 0
       tprevious = 0.d0
       rhocgs = AU * AU * AU * K2 / MSUN
+      pcount = 0
 c
 c Read in output messages
       inquire (file='message.in', exist=test)
@@ -380,14 +382,21 @@ C Element write out
             do j = 1, nbod
               k = code(j)
               if (unit(k).ge.10) then
+                
+                if (pcount < 1) then
+                  write (*,*) 'id',header(1:lenhead)
+                  pcount = 1
+                end if
+                 
                 if (timestyle.eq.1) then
                   write (unit(k),fout) year,month,t1,(el(iel(l),k),l=1,
      %              nel)
                 else
 C                  write (unit(k),fout) t1,(el(iel(l),k),l=1,nel)
-                  write (*,'(A8,$)') id(k) 
-                  write (*,fout) t1,(el(iel(l),k),l=1,nel)
+                   write (*,'(A8,$)') id(k) 
+                   write (*,fout) t1,(el(iel(l),k),l=1,nel)
                 end if
+
               end if
             end do
           end if
