@@ -10,3 +10,5 @@ mercury6
 .vscode
 *.pyc
 *.x
+*.aei
+*.hdf5
