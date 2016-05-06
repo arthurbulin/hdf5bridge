@@ -26,7 +26,6 @@ def get_header(dat):
 	return values	
 
 def get_bodies(dat):
-#	f = h5.File(where+file,'a')
 	bodies = list()
 	for i in xrange(len(dat)):
 		if dat[i] not in bodies:
@@ -43,18 +42,39 @@ def get_indexs(body_index, bodies):
 
 def refine_raw(dat):
 	header = get_header(dat)
+				
 	size = len(header) - 1
 	cols = np.linspace(1,size,num=size,dtype=int)
-	type = np.dtype(Decimal)
+	type = np.dtype(np.float64)
 	x = np.genfromtxt(dat[1:],usecols=cols,dtype=type)
 	
 	body_set = np.genfromtxt(dat[1:],usecols=(0),dtype='str')
 	bodies = get_bodies(body_set)
 	index = get_indexs(body_set, bodies)
+	for i in xrange(len(header)):
+		if 'id' in header[i]:
+			header.pop(i)
+			break
 	return header,bodies,index,x
 
-def assemble_set(header,bodies,index,dat):
-	for i in xrange(header):
-		for j in xrange(len(body)):
-			for k in xrange(len(index[body[j]]):
-				
+def assemble_sets(header,bodies,inds,dat,sim,set):
+	data_file = h5.File('./data.hdf5','a')
+	print 'HDF5 file opened for all access'
+	for i in xrange(len(bodies)):
+		print 'For: ' + bodies[i],
+		index = inds[bodies[i]]
+		print " Index retrieved",
+		body_data = dat[index]
+		print ' Data sorted',
+		body_data_rot = np.rot90(body_data)
+		print ' Data rotated',
+		body_data_flip = np.flipud(body_data_rot)
+		print ' Data flipped',
+		for j in xrange(len(header)):
+			commit_dat = body_data_flip[j]
+			print ' Commit_data created',
+			data_file.create_dataset(sim+'/'+set+'/'+bodies[i]+'/'+header[j], data=commit_dat)
+			print ' Commited.'
+	
+	data_file.close()
+	print 'File closed'
