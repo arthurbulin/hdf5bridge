@@ -7,6 +7,10 @@ from decimal import Decimal
 
 #Utilizes a python subprocess to capture the data necessary
 def element_capture(cmd):
+	"""
+	Calls the element fortran process and returns a list of all of our data.
+	cmd should be the name and location of the element program. Should be same directory
+	"""
 	p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	stdout = list()
 	while True:
